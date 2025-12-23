@@ -1,0 +1,18 @@
+# Ignore the virtual environment
+myenvs/
+venv/
+.env
+
+# Ignore large model files
+models/*.pt
+*.bin
+
+# Ignore pycache
+__pycache__/
+*.pyc
+
+# Ignore system files
+.DS_Store
+
+# Ignore sensitive API keys (Double check your scripts!)
+# Make sure you remove your actual GEMINI_API_KEY from the scripts before uploading!

@@ -1,0 +1,231 @@
+Loading resources...
+Running inference on Test Set...
+
+================================================================================
+PART 1: CONFUSION MATRIX (Statistical Patterns)
+================================================================================
+(Rows = True Labels, Columns = Predicted Labels)
+--------------------------------------------------------------------------------
+                              O  Abschlüsse  Anstellung  Arbeitsumfeld  Benefits  Bewerbungsprozess  Challenges  Erfahrung  Firmenbeschreibung  Firmenkundenbeschreibung  Fähigkeiten und Inhalte
+O                         28802         311        1235              0       336               2482           0        256                1326                       119                     4037
+Abschlüsse                   92        8700          83              0         6                 10           0        236                   0                         0                      355
+Anstellung                  785         116       19378              0       241                709           0         47                 562                       420                     1050
+Arbeitsumfeld                 1          35          44              0        28                  6           0          0                 149                        28                      204
+Benefits                    369          54         464              0     18544                520           0         18                 952                        56                      750
+Bewerbungsprozess          1868          20         891              0       596              34024           0         28                 827                         6                      512
+Challenges                    1          92         127              0       111                  0           0          0                  19                         0                      362
+Erfahrung                   163         385          34              0         5                  0           0       6304                   0                         0                      787
+Firmenbeschreibung          847          12         957              0       406               1181           0          0               18270                       270                     1568
+Firmenkundenbeschreibung     76           0         419              0        57                  0           0         15                 742                      2690                       52
+Fähigkeiten und Inhalte    1987         607        1252              0      1139                470           0       1195                1168                       265                    75421
+
+--------------------------------------------------------------------------------
+TOP CONFUSIONS (Where does the model struggle?)
+--------------------------------------------------------------------------------
+4037 times: True 'O' --> Predicted 'Fähigkeiten und Inhalte'
+2482 times: True 'O' --> Predicted 'Bewerbungsprozess'
+1987 times: True 'Fähigkeiten und Inhalte' --> Predicted 'O'
+1868 times: True 'Bewerbungsprozess' --> Predicted 'O'
+1568 times: True 'Firmenbeschreibung' --> Predicted 'Fähigkeiten und Inhalte'
+1326 times: True 'O' --> Predicted 'Firmenbeschreibung'
+1252 times: True 'Fähigkeiten und Inhalte' --> Predicted 'Anstellung'
+1235 times: True 'O' --> Predicted 'Anstellung'
+1195 times: True 'Fähigkeiten und Inhalte' --> Predicted 'Erfahrung'
+1181 times: True 'Firmenbeschreibung' --> Predicted 'Bewerbungsprozess'
+
+================================================================================
+PART 2: QUALITATIVE INSPECTION (Specific Examples)
+================================================================================
+Review these snippets to find boundary issues or vocabulary triggers.
+
+--- Example 1 ---
+Context:
+"testen wir neu Schwankungsmassnahmen im beschleunigten Verfahren im Rechtsschutz für Asylsuchende aus der Region Basel. Dafür suchen wir : Juristinnen und Juristen 60 - 80 % Ihre Aufgaben selbstständige Mandatsführung rechtliche Beratung und"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+.                    | O                         | Firmenbeschreibung
+Ihr                  | Anstellung                | Abschlüsse
+Profil               | Anstellung                | Abschlüsse
+Jurist               | Anstellung                | Abschlüsse
+isches               | Anstellung                | Abschlüsse
+
+--- Example 2 ---
+Context:
+"Du entscheidest, ob Du vier oder fünf Tage arbeiten möchten, damit Sie Beruf, Familie und Freizeit in Einklang bringen können. So geht es weiter Werde jetzt einen Teil unserer Erfolgsgeschichte und bewerbe dich online. Bitte klicke auf den Jetzt - auf"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+So                   | Bewerbungsprozess         | Benefits
+st                   | Bewerbungsprozess         | Fähigkeiten und Inhalte
+Ha                   | Bewerbungsprozess         | Fähigkeiten und Inhalte
+be                   | Bewerbungsprozess         | Fähigkeiten und Inhalte
+keine                | Bewerbungsprozess         | Fähigkeiten und Inhalte
+
+--- Example 3 ---
+Context:
+"mechanischer Art ) Erarbeitung und Durchführung von Optimierungsmassnahmen Begleitung von Beschaffungsprojekten Pikettdienst Ihre Kompetenz Abgeschlossene mechanische oder elektrische Grundausbildung, z. B. als Automechatroniker,"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+Pike                 | Challenges                | Abschlüsse
+tt                   | Challenges                | Fähigkeiten und Inhalte
+dienst               | Challenges                | Abschlüsse
+und                  | Fähigkeiten und Inhalte   | Abschlüsse
+Ihre                 | Anstellung                | Benefits
+
+--- Example 4 ---
+Context:
+"##hr gute Kommunikationsfähigkeiten Das dürfen Sie erwarten Eine gesunde und international ausgerichtete Unternehmung Sehr gute Sozialleistungen Eine fordernde und interessante Aufgabe Interessiert? Dann zögern Sie nicht länger und nehmen Sie Kontakt mit uns auf! Melden Sie sich"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+Eine                 | Benefits                  | Bewerbungsprozess
+ford                 | Benefits                  | Bewerbungsprozess
+ern                  | Benefits                  | Bewerbungsprozess
+de                   | Benefits                  | Bewerbungsprozess
+und                  | Benefits                  | Bewerbungsprozess
+
+--- Example 5 ---
+Context:
+"[CLS] sich direkt online. Beziehen Sie sich dabei bitte auf die Referenznummer 052 - SADG - 142272 - 146 - DE."
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+sich                 | Bewerbungsprozess         | O
+.                    | Bewerbungsprozess         | O
+
+--- Example 6 ---
+Context:
+"[CLS] Behörden Sie sind innovativ, dynamisch und zielorientiert Senden Sie uns Ihre Bewerbung mittels Klick auf den untenste"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+Behörden             | Fähigkeiten und Inhalte   | Benefits
+Sie                  | Fähigkeiten und Inhalte   | Benefits
+sind                 | Fähigkeiten und Inhalte   | Benefits
+inn                  | Fähigkeiten und Inhalte   | Benefits
+ovat                 | Fähigkeiten und Inhalte   | Benefits
+
+--- Example 7 ---
+Context:
+": En tant que spécialiste vous êtes responsable de la fabrication d ' étampes de decoupage simples et progressives ainsi que de leur maintenance Votre profil : Vous disposez [SEP] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD] [PAD]"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+tre                  | Fähigkeiten und Inhalte   | Abschlüsse
+profil               | Fähigkeiten und Inhalte   | Abschlüsse
+z                    | Fähigkeiten und Inhalte   | O
+
+--- Example 8 ---
+Context:
+"[CLS] 2017 - 03 - 02 Als führendes, ISO - zertifiziertes Entsorgungsunternehmen in der Ostschweiz suchen wir"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+2017                 | O                         | Anstellung
+-                    | O                         | Anstellung
+03                   | O                         | Anstellung
+-                    | O                         | Anstellung
+02                   | O                         | Anstellung
+
+--- Example 9 ---
+Context:
+"##st eine abwechslungsreiche Arbeit, du bist bereit Verantwortung zu übernehmen und möchtest in einem modernen und innovativen Betrieb deine Lehre als Logistiker / in EFZ beginnen? Mehr Infos Du suchst... eine Lehrstelle in der Firma, wo du"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+Lehre                | Fähigkeiten und Inhalte   | Anstellung
+als                  | Fähigkeiten und Inhalte   | Anstellung
+Lo                   | Fähigkeiten und Inhalte   | Anstellung
+gist                 | Fähigkeiten und Inhalte   | Anstellung
+iker                 | Fähigkeiten und Inhalte   | Anstellung
+
+--- Example 10 ---
+Context:
+"[CLS]gaben bestens aus. Neben Erfahrung im Umgang mit einer Lagersoftware bringen Sie eine sehr exakte und verantwortungsbe"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+gaben                | Fähigkeiten und Inhalte   | O
+Neben                | Erfahrung                 | Fähigkeiten und Inhalte
+und                  | Anstellung                | Erfahrung
+ein                  | Anstellung                | Erfahrung
+sau                  | Anstellung                | Erfahrung
+
+--- Example 11 ---
+Context:
+"nach Vereinbarung einen Schiffsführer ( m / w / d ) Entweder in Festanstellung oder als Ablöser. Anforderung Rheinpatent mindestens bis Mannheim, von Vorteil bis Basel Zulassungen Radarsystem und ADNR Gutes Deutsch und Umgang mit"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+An                   | Abschlüsse                | Fähigkeiten und Inhalte
+ford                 | Abschlüsse                | Fähigkeiten und Inhalte
+erung                | Abschlüsse                | Fähigkeiten und Inhalte
+Rhein                | Abschlüsse                | Fähigkeiten und Inhalte
+pate                 | Abschlüsse                | Fähigkeiten und Inhalte
+
+--- Example 12 ---
+Context:
+"rasant weiterentwickelt. Ab sofort oder nach Vereinbarung suchen wir in mehreren Standorten erfahrene Sanitärinstallateure, die ihr Handwerk anzuwenden wissen und offen für eine neue Herausforderung sind. Haben wir ihr Interesse geweckt"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+,                    | O                         | Anstellung
+die                  | Fähigkeiten und Inhalte   | Anstellung
+ihr                  | Fähigkeiten und Inhalte   | Anstellung
+Hand                 | Fähigkeiten und Inhalte   | Anstellung
+werk                 | Fähigkeiten und Inhalte   | Anstellung
+
+--- Example 13 ---
+Context:
+"[CLS]s avérées en négociation et capacité à convaincre maîtrise des outils MS Office Taux d ' activité 60 % Classe salariale"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+s                    | O                         | Fähigkeiten und Inhalte
+av                   | O                         | Fähigkeiten und Inhalte
+érées                | O                         | Fähigkeiten und Inhalte
+en                   | O                         | Fähigkeiten und Inhalte
+né                   | O                         | Fähigkeiten und Inhalte
+
+--- Example 14 ---
+Context:
+"[CLS] Möchten Sie wissen, wie Ihre Zukunft schmeckt? Kochen Sie mit Leidenschaft? Sind Sie begeistert von"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+M                    | Fähigkeiten und Inhalte   | O
+ö                    | Fähigkeiten und Inhalte   | O
+chten                | Fähigkeiten und Inhalte   | O
+Sie                  | Fähigkeiten und Inhalte   | O
+wis                  | Fähigkeiten und Inhalte   | O
+
+--- Example 15 ---
+Context:
+"[CLS] and generate business volumes of approximately $ 10 billion USD. www. hitachienergy. com Interested in joining our team? If so, we look forward to receiving your full application ( motivation letter"
+----------------------------------------
+Mismatches:
+Token                | True Label                | Predicted Label
+------------------------------------------------------------
+www                  | Firmenbeschreibung        | Bewerbungsprozess
+hita                 | Firmenbeschreibung        | Bewerbungsprozess
+chien                | Firmenbeschreibung        | Bewerbungsprozess
+com                  | Firmenbeschreibung        | Bewerbungsprozess
+Interest             | Firmenbeschreibung        | Bewerbungsprozess
+
+Done. Report saved to 'error_analysis_report.txt'.
